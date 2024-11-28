@@ -54,24 +54,7 @@ export default function Home() {
               {item.title}
             </p>
           </div>
-          // <div key={index}>
-          //   {/* <Card
-          //     style={{
-          //       border: 0,
-          //       margin: 0,
-          //       padding: 0,
-          //     }}
-          //   >
-          //     <Meta
-          //       avatar={<img src={item.img} alt='' className='rounded-lg cursor-pointer h-16 w-16 object-cover' />}
-          //       description='This is the description'
-          //       style={{
-          //         margin: 0,
-          //         padding: 0,
-          //       }}
-          //     />
-          //   </Card> */}
-          // </div>
+
         ))}
       </div>
     );
@@ -116,15 +99,15 @@ export default function Home() {
   const [khuyenMaiPosts, setKhuyenMaiPosts] = useState([]);
   useEffect(() => {
     axios
-      .get('https://60b9f19280400f00177b744b.mockapi.io/ArticlesDienAnh02')
+      .get('https://5ccfa9755b71f40014dc0df8.mockapi.io/news')
       .then(res => setDienAnhPosts(res.data))
       .catch(err => console.error(err));
     axios
-      .get('https://60babc8f42e1d0001761ff84.mockapi.io/ArticlesReview02')
+      .get('https://674867fa5801f5153590bb53.mockapi.io/Review')
       .then(res => setReviewPosts(res.data))
       .catch(err => console.error(err));
     axios
-      .get('https://60babc8f42e1d0001761ff84.mockapi.io/ArticlesKhuyenMai02')
+      .get('https://674872315801f5153590f2e3.mockapi.io/Promotion')
       .then(res => setKhuyenMaiPosts(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -263,14 +246,16 @@ export default function Home() {
       />
       <div className=''>
         <Slider />
-        <div className='container grid grid-cols-1 lg:grid-cols-4 gap-3 pt-[80px]'>
+        <div className="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-5 pt-20 px-4">
           <Select
             disabled={movieArrFilter.length === 0}
             showSearch
-            className='w-full'
-            placeholder='Choose film'
-            optionFilterProp='children'
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            className="w-full border border-gray-300 rounded-lg shadow-md hover:shadow-lg focus:ring focus:ring-blue-400 bg-gradient-to-r from-blue-100 to-blue-200 text-gray-700"
+            placeholder="🎬 Choose film"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
             filterSort={(optionA, optionB) =>
               (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
             }
@@ -282,14 +267,18 @@ export default function Home() {
               setChosenTime(null);
             }}
           />
+
           <Select
             disabled={!searchFilm}
             value={searchCinema}
             showSearch
-            className='w-full'
-            placeholder='Choose cinema'
-            optionFilterProp='children'
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            className={`w-full border rounded-lg shadow-md hover:shadow-lg focus:ring focus:ring-green-400 bg-gradient-to-r from-green-100 to-green-200 ${searchFilm ? 'border-green-300' : 'border-gray-200'
+              }`}
+            placeholder="🎥 Choose cinema"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
             filterSort={(optionA, optionB) =>
               (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
             }
@@ -299,30 +288,35 @@ export default function Home() {
               setChosenTime(null);
             }}
           />
+
           <Select
             disabled={!searchCinema}
             value={chosenTime}
             showSearch
-            className='w-full'
-            placeholder='Choose time'
-            optionFilterProp='children'
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            className={`w-full border rounded-lg shadow-md hover:shadow-lg focus:ring focus:ring-purple-400 bg-gradient-to-r from-purple-100 to-purple-200 ${searchCinema ? 'border-purple-300' : 'border-gray-200'
+              }`}
+            placeholder="⏰ Choose time"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
             filterSort={(optionA, optionB) =>
               (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
             }
             options={searchTime}
             onChange={e => setChosenTime(e)}
           />
+
           <button
             disabled={!chosenTime}
-            className={`w-full mx-auto text-white bg-red-500 ${chosenTime ? 'opacity-100' : 'opacity-50'} rounded ${
-              chosenTime && 'hover:bg-red-800'
-            } duration-300 ${chosenTime ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+            className={`w-full py-3 text-white font-semibold rounded-3xl shadow-lg transition-all duration-300 
+      ${chosenTime ? 'bg-gradient-to-r from-red-400 via-pink-500 to-yellow-500 hover:scale-105' : 'bg-gray-300 cursor-not-allowed'}`}
             onClick={() => navigate(`/purchase/${chosenTime}`)}
           >
-            Book tickets
+            🎟️ Book Tickets
           </button>
         </div>
+
         <div ref={showTimesRef} className='pt-[80px]'></div>
         <ListMovie movieArr={movieArr}></ListMovie>
         <div ref={cinemasRef} className='pt-[80px]'></div>
@@ -348,11 +342,10 @@ export default function Home() {
             <div className='grid grid-cols-1 md:grid-cols-2 gap-12 py-12'>
               <div className='flex justify-center items-center text-center md:text-justify'>
                 <div className='space-y-12'>
-                  <h1 className='font-bold text-3xl'>Ứng dụng tiện lợi dành cho dân yêu điện ảnh</h1>
-                  <p>Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và đổi quà hấp dẫn.</p>
+                  <h1 className='font-bold text-3xl'>Ứng dụng tiện lợi để xem phim</h1>
                   <div>
                     <a
-                      href='https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197'
+                      href='https://apps.microsoft.com/detail/9wzdncrfj3tj?hl=en-us&gl=US'
                       target='blank'
                       className='uppercase bg-[#fb4226] py-5 px-7 rounded-lg hover:bg-red-800 duration-300'
                     >
@@ -363,7 +356,7 @@ export default function Home() {
                     TIX có hai phiên bản{' '}
                     <a
                       target='blank'
-                      href='https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197'
+                      href='https://apps.apple.com/us/app/netflix/id363590051'
                       className='underline cursor-pointer'
                     >
                       IOS
@@ -371,7 +364,7 @@ export default function Home() {
                     &{' '}
                     <a
                       target='blank'
-                      href='https://play.google.com/store/apps/details?id=com.movie.booking'
+                      href='https://play.google.com/store/apps/details?id=com.netflix.mediaclient&hl=en-US'
                       className='underline cursor-pointer'
                     >
                       Android
@@ -382,7 +375,7 @@ export default function Home() {
               <div className='relative'>
                 <img
                   alt=''
-                  src='https://portfolio-minhlong.vercel.app/images/phoneFrame2.png'
+                  src='./../../assets/phone.png'
                   className='mx-auto w-48 z-50'
                 />
                 <div className='absolute top-1/2 text-white left-1/2 transform -translate-x-1/2 -translate-y-1/2'>

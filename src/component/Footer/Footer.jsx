@@ -93,29 +93,24 @@ export default function Footer() {
         </div>
         <div className='w-full h-px bg-white'></div>
         <div className='py-6 grid lg:flex flex-row gap-12'>
-          <div className='basis-1/6'>
-            <img
-              src='https://movie-booking-project.vercel.app/img/logo-connect/zion-logo.jpg'
-              alt=''
-              className='mx-auto md:mx-0 rounded-lg w-24'
-            />
+
+          <div className="flex justify-center items-center flex-col space-y-3 text-center md:text-left">
+            <h2 className="text-2xl font-semibold text-gray-800 uppercase">
+              <span className="text-blue-600 font-bold">GITHUB: </span>
+              <a
+                href="https://github.com/vunguyenkhanh/BCS14_Capstone_ReactJS"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:text-red-500 transition-colors duration-500 ease-in-out"
+              >
+                https://github.com/vunguyenkhanh/BCS14_Capstone_ReactJS
+              </a>
+            </h2>
           </div>
-          <div className='basis-4/6 space-y-3 text-center md:text-justify'>
-            <h1 className='uppercase font-bold'>TIX – SẢN PHẨM CỦA CÔNG TY CỔ PHẦN ZION</h1>
-            <div className='text-sm space-y-1'>
-              <p>Địa chỉ: Z06 Đường số 13, Phường Tân Thuận Đông, Quận 7, Tp. Hồ Chí Minh, Việt Nam.</p>
-              <p>Giấy chứng nhận đăng ký kinh doanh số: 0101659783,</p>
-              <p>đăng ký thay đổi lần thứ 30, ngày 22 tháng 01 năm 2020 do Sở kế hoạch và đầu tư TPHCM cấp.</p>
-              <p>Số Điện Thoại (Hotline): 1900 545 436</p>
-            </div>
-          </div>
-          <div className='basis-1/6'>
-            <img
-              src='https://movie-booking-project.vercel.app/img/media/certificate.png'
-              alt=''
-              className='mx-auto md:mx-0 w-24'
-            />
-          </div>
+
+
+
+
         </div>
       </div>
     </div>

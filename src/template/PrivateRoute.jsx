@@ -13,7 +13,6 @@ export default function PrivateRoute({ children }) {
       message.error("Please login first, admin!");
       navigate("/admin/auth");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (info?.maLoaiNguoiDung === "QuanTri") {
     return children;

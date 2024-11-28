@@ -5,5 +5,5 @@ export const placeholderImage = `https://upload.wikimedia.org/wikipedia/commons/
 
 export const defaultTrailerData = "https://www.youtube.com/watch?v=kvAfmYNtugQ";
 export const defaultTrailer = "https://www.youtube.com/watch?v=05DqIGS_koU";
-export const defaultAvatar = "https://avatarfiles.alphacoders.com/122/122157.jpg";
+export const defaultAvatar = "https://img.freepik.com/free-photo/3d-cartoon-wild-animal-nature_23-2151746823.jpg";
 export const countryFormat = "en-US";
