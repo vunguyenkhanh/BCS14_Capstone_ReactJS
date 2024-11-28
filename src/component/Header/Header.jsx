@@ -21,6 +21,7 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
     };
     dispatch(action);
   };
+  
   const handleLogin = () => {
     navigate('/login');
   };

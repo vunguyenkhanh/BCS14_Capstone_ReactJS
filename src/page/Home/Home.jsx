@@ -225,7 +225,8 @@ export default function Home() {
   };
   return (
     <>
-      <div className="bg-black text-white">
+      <div className="bg-black text-white"> 
+        
         <Header
           scrollIntoShowTimesRef={scrollIntoShowTimesRef}
           scrollIntoCinemasRef={scrollIntoCinemasRef}
