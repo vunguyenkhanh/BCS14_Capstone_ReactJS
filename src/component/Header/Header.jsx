@@ -34,16 +34,27 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
   const items = [
     {
       key: '1',
-      label: info ? <Link to='/account'>{info.hoTen}</Link> : <Link to='/login'>Login</Link>,
+      label: (
+        <Link to="/account" className="block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+          {info ? info.hoTen : 'Login'}
+        </Link>
+      ),
     },
     {
       key: '2',
-      label: info ? <a onClick={handleLogout}>Logout</a> : <Link to='/register'>Register</Link>,
+      label: (
+        <a
+          onClick={info ? handleLogout : handleRegister}
+          className="block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+        >
+          {info ? 'Logout' : 'Register'}
+        </a>
+      ),
     },
     {
       key: '3',
       label: (
-        <a onClick={scrollIntoShowTimesRef} className='text-black hover:text-gray-700 durataion-300'>
+        <a onClick={scrollIntoShowTimesRef} className="block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
           Showtimes
         </a>
       ),
@@ -51,7 +62,7 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
     {
       key: '4',
       label: (
-        <a onClick={scrollIntoCinemasRef} className='text-black hover:text-gray-700 durataion-300'>
+        <a onClick={scrollIntoCinemasRef} className="block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
           Cinemas
         </a>
       ),
@@ -59,7 +70,7 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
     {
       key: '5',
       label: (
-        <a onClick={scrollIntoNewsRef} className='text-black hover:text-gray-700 durataion-300'>
+        <a onClick={scrollIntoNewsRef} className="block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
           News
         </a>
       ),
@@ -67,12 +78,13 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
     {
       key: '6',
       label: (
-        <a onClick={scrollIntoAppRef} className='text-black hover:text-gray-700 durataion-300'>
+        <a onClick={scrollIntoAppRef} className="block px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
           App
         </a>
       ),
     },
   ];
+  
 
   const renderUserNav = () => {
     const classBtn = 
@@ -129,36 +141,53 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
   };
   
   return (
-    <div className="bg-gradient-to-r from-white/50 via-gray-200/30 backdrop-blur-lg flex items-center justify-between shadow-md px-8 py-2 gap-4 fixed z-50 w-full">
-      <p className="text-2xl font-medium text-red-600 animate-pulse text-center">
-        <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-          <img alt="" src="../../../src/assets/logo3.webp" className="h-10" />
-        </Link>
-      </p>
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        height: '100px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        color: '#fff',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '0 16px',
+        zIndex: 50,
+      }}
+      className="shadow-md"
+    >
+      <div className="flex items-center">
+        <p className="text-2xl font-medium animate-pulse text-center">
+          <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+            <img alt="" src="../../../src/assets/logo3.webp" className="h-10" />
+          </Link>
+        </p>
+      </div>
   
       {location.pathname === '/' && (
-        <div className="text-lg font-medium gap-6 lg:gap-12 text-center hidden md:flex justify-center items-center">
+        <div className="text-lg font-medium gap-6 lg:gap-12 hidden md:flex justify-center items-center">
           <button
             onClick={scrollIntoShowTimesRef}
-            className="text-gray-800 hover:text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 transition duration-300"
+            className="bg-red-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-red-600"
           >
             Showtimes
           </button>
           <button
             onClick={scrollIntoCinemasRef}
-            className="text-gray-800 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 transition duration-300"
+            className="bg-red-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-red-600"
           >
             Cinemas
           </button>
           <button
             onClick={scrollIntoNewsRef}
-            className="text-gray-800 hover:text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-purple-400 to-indigo-400 transition duration-300"
+            className="bg-red-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-red-600"
           >
             News
           </button>
           <button
             onClick={scrollIntoAppRef}
-            className="text-gray-800 hover:text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-pink-400 to-red-400 transition duration-300"
+            className="bg-red-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-red-600"
           >
             App
           </button>
@@ -169,10 +198,12 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
         <div className="hidden md:block">{renderUserNav()}</div>
         <div className="block md:hidden">
           <Dropdown menu={{ items }} placement="bottomRight">
-            <Button>Menu</Button>
+            <Button className="bg-red-500 text-white hover:bg-red-600">Menu</Button>
           </Dropdown>
         </div>
       </div>
     </div>
   );
+  
+  
 }

@@ -96,7 +96,7 @@ export default function Footer() {
 
           <div className="flex justify-center items-center flex-col space-y-3 text-center md:text-left">
             <h2 className="text-2xl font-semibold text-gray-800 uppercase">
-              <span className="text-blue-600 font-bold">GITHUB: </span>
+              <span className="text-red-600 font-bold">GITHUB: </span>
               <a
                 href="https://github.com/vunguyenkhanh/BCS14_Capstone_ReactJS"
                 target="_blank"
