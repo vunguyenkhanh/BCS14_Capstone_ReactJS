@@ -148,7 +148,7 @@ export default function Header({ scrollIntoShowTimesRef, scrollIntoCinemasRef, s
         top: 0,
         width: '100%',
         height: '100px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         color: '#fff',
         display: 'flex',
         justifyContent: 'space-between',
