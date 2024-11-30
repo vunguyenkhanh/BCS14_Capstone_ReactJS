@@ -120,5 +120,4 @@ export default function TabMovie() {
   );
 }
 
-// tab antd
-// heThongRap, cumRap, phim, gioChieu
+

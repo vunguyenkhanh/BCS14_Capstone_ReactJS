@@ -32,7 +32,7 @@ export default function Home() {
               <img src={item.img} alt='' className='rounded-lg cursor-pointer h-72 w-full object-cover' />
             </a>
             <a target='blank' href={item.url}>
-              <h1 className='font-bold text-xl mt-2 mb-3 text-black hover:text-[#fb4226] cursor-pointer duration-300 truncate'>
+              <h1 className='font-bold text-xl mt-2 mb-3 text-white hover:text-[#fb4226] cursor-pointer duration-300 truncate'>
                 {item.title}
               </h1>
             </a>
@@ -50,28 +50,11 @@ export default function Home() {
             <a target='blank' href={item.url} className='basis-auto'>
               <img src={item.img} alt='' className='rounded-lg cursor-pointer h-20 w-20 object-cover' />
             </a>
-            <p target='blank' href={item.url} className='basis-4/5 text-gray-700 text-justify'>
+            <p target='blank' href={item.url} className='basis-4/5 text-white hover:text-[#fb4226] cursor-pointer duration-300 truncate text-justify'>
               {item.title}
             </p>
           </div>
-          // <div key={index}>
-          //   {/* <Card
-          //     style={{
-          //       border: 0,
-          //       margin: 0,
-          //       padding: 0,
-          //     }}
-          //   >
-          //     <Meta
-          //       avatar={<img src={item.img} alt='' className='rounded-lg cursor-pointer h-16 w-16 object-cover' />}
-          //       description='This is the description'
-          //       style={{
-          //         margin: 0,
-          //         padding: 0,
-          //       }}
-          //     />
-          //   </Card> */}
-          // </div>
+
         ))}
       </div>
     );
@@ -116,15 +99,15 @@ export default function Home() {
   const [khuyenMaiPosts, setKhuyenMaiPosts] = useState([]);
   useEffect(() => {
     axios
-      .get('https://60b9f19280400f00177b744b.mockapi.io/ArticlesDienAnh02')
+      .get('https://5ccfa9755b71f40014dc0df8.mockapi.io/news')
       .then(res => setDienAnhPosts(res.data))
       .catch(err => console.error(err));
     axios
-      .get('https://60babc8f42e1d0001761ff84.mockapi.io/ArticlesReview02')
+      .get('https://674867fa5801f5153590bb53.mockapi.io/Review')
       .then(res => setReviewPosts(res.data))
       .catch(err => console.error(err));
     axios
-      .get('https://60babc8f42e1d0001761ff84.mockapi.io/ArticlesKhuyenMai02')
+      .get('https://674872315801f5153590f2e3.mockapi.io/Promotion')
       .then(res => setKhuyenMaiPosts(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -242,167 +225,181 @@ export default function Home() {
   };
   return (
     <>
-      <Header
-        scrollIntoShowTimesRef={scrollIntoShowTimesRef}
-        scrollIntoCinemasRef={scrollIntoCinemasRef}
-        scrollIntoNewsRef={scrollIntoNewsRef}
-        scrollIntoAppRef={scrollIntoAppRef}
-      />
-      <ModalVideo
-        channel='youtube'
-        youtube={{ mute: 0, autoplay: 0 }}
-        isOpen={chosenTrailer !== ''}
-        videoId={chosenTrailer}
-        onClose={() => {
-          const action = {
-            type: CHOOSE_TRAILER,
-            payload: '',
-          };
-          dispatch(action);
-        }}
-      />
-      <div className=''>
-        <Slider />
-        <div className='container grid grid-cols-1 lg:grid-cols-4 gap-3 pt-[80px]'>
-          <Select
-            disabled={movieArrFilter.length === 0}
-            showSearch
-            className='w-full'
-            placeholder='Choose film'
-            optionFilterProp='children'
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
-            filterSort={(optionA, optionB) =>
-              (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-            }
-            options={movieArrFilter}
-            onChange={value => {
-              setSearchFilm(value);
-              setSearchCinema(null);
-              setSearchTime(null);
-              setChosenTime(null);
-            }}
-          />
-          <Select
-            disabled={!searchFilm}
-            value={searchCinema}
-            showSearch
-            className='w-full'
-            placeholder='Choose cinema'
-            optionFilterProp='children'
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
-            filterSort={(optionA, optionB) =>
-              (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-            }
-            options={chosenCinemaArr}
-            onChange={e => {
-              setSearchCinema(e);
-              setChosenTime(null);
-            }}
-          />
-          <Select
-            disabled={!searchCinema}
-            value={chosenTime}
-            showSearch
-            className='w-full'
-            placeholder='Choose time'
-            optionFilterProp='children'
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
-            filterSort={(optionA, optionB) =>
-              (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-            }
-            options={searchTime}
-            onChange={e => setChosenTime(e)}
-          />
-          <button
-            disabled={!chosenTime}
-            className={`w-full mx-auto text-white bg-red-500 ${chosenTime ? 'opacity-100' : 'opacity-50'} rounded ${
-              chosenTime && 'hover:bg-red-800'
-            } duration-300 ${chosenTime ? 'cursor-pointer' : 'cursor-not-allowed'}`}
-            onClick={() => navigate(`/purchase/${chosenTime}`)}
-          >
-            Book tickets
-          </button>
-        </div>
-        <div ref={showTimesRef} className='pt-[80px]'></div>
-        <ListMovie movieArr={movieArr}></ListMovie>
-        <div ref={cinemasRef} className='pt-[80px]'></div>
-        <TabMovie />
-        <div ref={newsRef} className='pt-[80px]'></div>
-        <div className='container'>
-          <Tabs
-            defaultActiveKey='1'
-            centered
-            items={kindOfPosts.map((item, index) => {
-              const id = String(index + 1);
-              return {
-                label: item,
-                key: id,
-                children: renderPosts(index),
-              };
-            })}
-          />
-        </div>
-        <div ref={appRef} className='pt-[48px]'></div>
-        <div className='flex flex-col min-h-[calc(100vh-48px)] bg-movie-background bg-center bg-cover bg-no-repeat bg-fixed relative'>
-          <div className='flex flex-1 justify-center items-center text-white container'>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-12 py-12'>
-              <div className='flex justify-center items-center text-center md:text-justify'>
-                <div className='space-y-12'>
-                  <h1 className='font-bold text-3xl'>Ứng dụng tiện lợi dành cho dân yêu điện ảnh</h1>
-                  <p>Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và đổi quà hấp dẫn.</p>
-                  <div>
-                    <a
-                      href='https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197'
-                      target='blank'
-                      className='uppercase bg-[#fb4226] py-5 px-7 rounded-lg hover:bg-red-800 duration-300'
-                    >
-                      APP MIỄN PHÍ – TẢI VỀ NGAY!
-                    </a>
+      <div className="bg-black text-white"> 
+        
+        <Header
+          scrollIntoShowTimesRef={scrollIntoShowTimesRef}
+          scrollIntoCinemasRef={scrollIntoCinemasRef}
+          scrollIntoNewsRef={scrollIntoNewsRef}
+          scrollIntoAppRef={scrollIntoAppRef}
+        />
+        <ModalVideo
+          channel="youtube"
+          youtube={{ mute: 0, autoplay: 0 }}
+          isOpen={chosenTrailer !== ''}
+          videoId={chosenTrailer}
+          onClose={() => {
+            const action = {
+              type: CHOOSE_TRAILER,
+              payload: '',
+            };
+            dispatch(action);
+          }}
+        />
+        <div>
+          <Slider />
+          <div className="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-5 pt-20 px-4">
+            <Select
+              disabled={movieArrFilter.length === 0}
+              showSearch
+              className="w-full border border-red-500 rounded-lg shadow-md hover:shadow-lg focus:ring focus:ring-red-400 bg-gradient-to-r from-red-100 to-red-200 text-white"
+              placeholder="🎬 Choose film"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={movieArrFilter}
+              onChange={value => {
+                setSearchFilm(value);
+                setSearchCinema(null);
+                setSearchTime(null);
+                setChosenTime(null);
+              }}
+            />
+
+            <Select
+              disabled={!searchFilm}
+              value={searchCinema}
+              showSearch
+              className={`w-full border rounded-lg shadow-md hover:shadow-lg focus:ring focus:ring-red-400 bg-gradient-to-r from-red-100 to-red-200 ${searchFilm ? 'border-red-300' : 'border-gray-200'} text-white`}
+              placeholder="🎥 Choose cinema"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={chosenCinemaArr}
+              onChange={e => {
+                setSearchCinema(e);
+                setChosenTime(null);
+              }}
+            />
+
+            <Select
+              disabled={!searchCinema}
+              value={chosenTime}
+              showSearch
+              className={`w-full border rounded-lg shadow-md hover:shadow-lg focus:ring focus:ring-red-400 bg-gradient-to-r from-red-100 to-red-200 ${searchCinema ? 'border-red-300' : 'border-gray-200'} text-white`}
+              placeholder="⏰ Choose time"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={searchTime}
+              onChange={e => setChosenTime(e)}
+            />
+
+            <button
+              disabled={!chosenTime}
+              className={`w-full py-3 text-white font-semibold rounded-3xl shadow-lg transition-all duration-300 
+      ${chosenTime ? 'bg-gradient-to-r from-red-500 via-pink-500 to-yellow-500 hover:scale-105' : 'bg-gray-300 cursor-not-allowed'}`}
+              onClick={() => navigate(`/purchase/${chosenTime}`)}
+            >
+              🎟️ Book Tickets
+            </button>
+          </div>
+
+
+          <div ref={showTimesRef} className="pt-[80px]"></div>
+          <ListMovie movieArr={movieArr}></ListMovie>
+          <div ref={cinemasRef} className="pt-[80px]"></div>
+          <TabMovie />
+          <div ref={newsRef} className="pt-[80px]"></div>
+          <div className="container">
+            <Tabs
+              defaultActiveKey="1"
+              centered
+              items={kindOfPosts.map((item, index) => {
+                const id = String(index + 1);
+                return {
+                  label: <span className="bg-red-600 text-white px-5 py-1 rounded-md transition-all duration-300 hover:bg-red-700 transform hover:scale-105 text-xl font-semibold shadow-md">
+                  {item}
+                </span>,
+                  key: id,
+                  children: renderPosts(index),
+                };
+              })}
+            />
+          </div>
+          <div ref={appRef} className="pt-[48px]"></div>
+          <div className="flex flex-col min-h-[calc(100vh-48px)] bg-movie-background bg-center bg-cover bg-no-repeat bg-fixed relative">
+            <div className="flex flex-1 justify-center items-center text-white container">
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-12 py-12'>
+                <div className='flex justify-center items-center text-center md:text-justify'>
+                  <div className='space-y-12'>
+                    <h1 className='font-bold text-3xl'>Ứng dụng tiện lợi để xem phim</h1>
+                    <div>
+                      <a
+                        href='https://apps.microsoft.com/detail/9wzdncrfj3tj?hl=en-us&gl=US'
+                        target='blank'
+                        className='uppercase bg-[#fb4226] py-5 px-7 rounded-lg hover:bg-red-800 duration-300'
+                      >
+                        APP MIỄN PHÍ – TẢI VỀ NGAY!
+                      </a>
+                    </div>
+                    <p>
+                      TIX có hai phiên bản{' '}
+                      <a
+                        target='blank'
+                        href='https://apps.apple.com/us/app/netflix/id363590051'
+                        className='underline cursor-pointer'
+                      >
+                        IOS
+                      </a>{' '}
+                      &{' '}
+                      <a
+                        target='blank'
+                        href='https://play.google.com/store/apps/details?id=com.netflix.mediaclient&hl=en-US'
+                        className='underline cursor-pointer'
+                      >
+                        Android
+                      </a>
+                    </p>
                   </div>
-                  <p>
-                    TIX có hai phiên bản{' '}
-                    <a
-                      target='blank'
-                      href='https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197'
-                      className='underline cursor-pointer'
-                    >
-                      IOS
-                    </a>{' '}
-                    &{' '}
-                    <a
-                      target='blank'
-                      href='https://play.google.com/store/apps/details?id=com.movie.booking'
-                      className='underline cursor-pointer'
-                    >
-                      Android
-                    </a>
-                  </p>
                 </div>
-              </div>
-              <div className='relative'>
-                <img
-                  alt=''
-                  src='https://portfolio-minhlong.vercel.app/images/phoneFrame2.png'
-                  className='mx-auto w-48 z-50'
-                />
-                <div className='absolute top-1/2 text-white left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-                  <Carousel effect='fade' autoplay dots={false} className='w-[180px] mx-auto'>
-                    {Array.from({ length: 15 }, (_, i) => i + 1).map(index => (
-                      <img
-                        key={index}
-                        className='w-[180px] mx-auto rounded-2xl'
-                        src={`https://movie-booking-project.vercel.app/img/mobile/slide${index + 1}.jpg`}
-                        alt=''
-                      />
-                    ))}
-                  </Carousel>
+                <div className='relative'>
+                  <img
+                    alt=''
+                    src='./../../assets/phone.png'
+                    className='mx-auto w-48 z-50'
+                  />
+                  <div className='absolute top-1/2 text-white left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+                    <Carousel effect='fade' autoplay dots={false} className='w-[180px] mx-auto'>
+                      {Array.from({ length: 15 }, (_, i) => i + 1).map(index => (
+                        <img
+                          key={index}
+                          className='w-[180px] mx-auto rounded-2xl'
+                          src={`https://movie-booking-project.vercel.app/img/mobile/slide${index + 1}.jpg`}
+                          alt=''
+                        />
+                      ))}
+                    </Carousel>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
